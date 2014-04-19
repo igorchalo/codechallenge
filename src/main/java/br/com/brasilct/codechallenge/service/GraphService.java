@@ -76,10 +76,6 @@ public class GraphService {
             Station singleStation1 = getStationById(line.getStation1());
             Station station1 = this.getStation(singleStation1.getName());
             
-            if(line.getStation1().equals("1")){
-            	System.out.println("foi");
-            }
-            
             Plataform plataform1 = null;
             
             for (Plataform plataform : station1.getPlataforms()) {
@@ -95,10 +91,6 @@ public class GraphService {
 
             Station singleStation2 = getStationById(line.getStation2());
             Station station2 = this.getStation(singleStation2.getName());
-            
-            if(line.getStation2().equals("1")){
-            	System.out.println("foi");
-            }
             
             Plataform plataform2 = null;
             
