@@ -1,37 +1,43 @@
 package br.com.brasilct.codechallenge.resource;
 
-import java.net.UnknownHostException;
-import java.util.UUID;
-
-import javax.ws.rs.Consumes;
+import javax.jws.WebParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import br.com.brasilct.codechallenge.repository.MongoDbRepository;
 
 @Path("/")
 public class SubwayResource {
 	
-	private MongoDbRepository mongoDbRepository = new MongoDbRepository();
+	@GET
+	@Path("/get/{origin}/{destination}")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response getAnyRoute(@PathParam("origin") @WebParam(name = "origin") String origin,
+			@PathParam("destination") @WebParam(name = "destination") String destination) {
+
+		//return Response.status(Status.OK).entity(object).build();
+		return null;
+	}
 	
 	@GET
-	@Path("{key}")
+	@Path("/getshortestpath/{origin}/{destination}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response getAnyRoute(@PathParam("key") UUID key) {
-		try {
-			mongoDbRepository.getMongoDb();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public Response getShortestPath(@PathParam("origin") @WebParam(name = "origin") String origin,
+			@PathParam("destination") @WebParam(name = "destination") String destination) {
+
 		//return Response.status(Status.OK).entity(object).build();
 		return null;
 	}
 
+	@GET
+	@Path("/getroutetime/{origin}/{destination}")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response getRouteTime(@PathParam("origin") @WebParam(name = "origin") String origin,
+			@PathParam("destination") @WebParam(name = "destination") String destination) {
+
+		//return Response.status(Status.OK).entity(object).build();
+		return null;
+	}
 }
