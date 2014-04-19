@@ -30,8 +30,7 @@ public class SubwayResource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Event event = repository.find(key);
-		//return Response.status(Status.OK).entity(event).build();
+		//return Response.status(Status.OK).entity(object).build();
 		return null;
 	}
 

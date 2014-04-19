@@ -127,8 +127,8 @@ public class GraphServiceTest {
     
     @Test
     public void graphSearch(){
-    	GraphSearch graphSearch = new GraphSearch();
-    	graphSearch.execute("Acton Town", "Aldgate");
+    	//GraphSearch graphSearch = new GraphSearch();
+    	//graphSearch.execute("Acton Town", "Aldgate");
     }
 	
 }
