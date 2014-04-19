@@ -45,7 +45,7 @@ public class Util {
     }
 
     public static String getTime(final DijkstraShortestPath<Vertex, Edge> algorithm) {
-        return "Tempo gasto: " + ((int) algorithm.getPathLength() - 2 * GraphService.MAX_WEIGHT);
+        return "Tempo gasto: " + ((int) algorithm.getPathLength() - 2 * GraphService.MAX_WEIGHT) + " minutos.";
     }
 
 }

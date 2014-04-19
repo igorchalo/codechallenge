@@ -51,9 +51,9 @@ public class GraphService {
             Station newStation = new Station(station.getName());
             graph.addVertex(newStation);
             
-            int numberOfLinesInStation = countLinesPassingInStation(station.getId());
+            int linesConnectedToThisStation = countLinesConnectedToStation(station.getId());
             
-            for (int i = 0; i < numberOfLinesInStation; i++) {
+            for (int i = 0; i < linesConnectedToThisStation; i++) {
                 Plataform plataform = new Plataform(newStation);
                 graph.addVertex(plataform);
                 
@@ -67,16 +67,22 @@ public class GraphService {
                 
                 newStation.addPlataform(plataform);
             }
+            
             stationMap.put(station.getName(), newStation);
             stations.add(newStation);
         }
 
         for (Line line : lines) {
-            Station station1 = getStationById(line.getStation1());
-            Station Station1 = this.getStation(station1.getName());
+            Station singleStation1 = getStationById(line.getStation1());
+            Station station1 = this.getStation(singleStation1.getName());
+            
+            if(line.getStation1().equals("1")){
+            	System.out.println("foi");
+            }
+            
             Plataform plataform1 = null;
             
-            for (Plataform plataform : Station1.getPlataforms()) {
+            for (Plataform plataform : station1.getPlataforms()) {
                 if (!plataform.hasLine()) {
                     plataform.setLine(Integer.parseInt(line.getLine()));
                     plataform1 = plataform;
@@ -87,12 +93,16 @@ public class GraphService {
                 }
             }
 
-            Station station2 = getStationById(line.getStation2());
-            Station Station2 = this.getStation(station2.getName());
+            Station singleStation2 = getStationById(line.getStation2());
+            Station station2 = this.getStation(singleStation2.getName());
+            
+            if(line.getStation2().equals("1")){
+            	System.out.println("foi");
+            }
             
             Plataform plataform2 = null;
             
-            for (Plataform plataform : Station2.getPlataforms()) {
+            for (Plataform plataform : station2.getPlataforms()) {
                 if (!plataform.hasLine()) {
                     plataform.setLine(Integer.parseInt(line.getLine()));
                     plataform2 = plataform;
@@ -109,8 +119,7 @@ public class GraphService {
         return graph;
     }
 
-    // Eu deveria pegar esse valor do campo total_lines da tabela stations.csv, mas infelizmente o valor está errado para pelo menos uma estação.
-    private int countLinesPassingInStation(final String idStation) {
+    private int countLinesConnectedToStation(final String idStation) {
         int result = 0;
         for (Line line : lines) {
             if (line.getStation1().equals(idStation) || line.getStation2().equals(idStation)) {

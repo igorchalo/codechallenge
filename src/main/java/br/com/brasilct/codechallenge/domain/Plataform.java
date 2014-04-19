@@ -31,7 +31,7 @@ public class Plataform extends Vertex {
 
     @Override
     public String toString() {
-        return "Estação " + Station.getName()+ ", plataforma na linha " + line;
+        return "Estação " + Station.getName()+ " - plataforma na linha " + line;
     }
 
 }

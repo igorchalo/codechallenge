@@ -119,17 +119,15 @@ public class GraphServiceTest {
 
         DijkstraShortestPath<Vertex, Edge> alg = new DijkstraShortestPath<Vertex, Edge>(graph, pedroII, saoBento);
 
-        //System.out.println(alg.getPathEdgeList());
-        Util.printRoute(alg.getPathEdgeList());
+        List<Edge> edges = alg.getPathEdgeList();
+        
+        Assert.assertEquals("(Estação Pedro II : Estação Pedro II - plataforma na linha 3)", edges.get(0).toString());
+        Assert.assertEquals("(Estação Sé - plataforma na linha 3 : Estação Pedro II - plataforma na linha 3)", edges.get(1).toString());
+        Assert.assertEquals("(Estação Sé - plataforma na linha 1 : Estação Sé - plataforma na linha 3)", edges.get(2).toString());
+        Assert.assertEquals("(Estação Sé - plataforma na linha 1 : Estação São Bento - plataforma na linha 1)", edges.get(3).toString());
+        
+        Assert.assertEquals("Tempo gasto: 18 minutos.", Util.getTime(alg));
 
-        System.out.println(Util.getTime(alg));
-
-    }
-    
-    @Test
-    public void graphSearch(){
-    	//GraphSearch graphSearch = new GraphSearch();
-    	//graphSearch.execute("Acton Town", "Aldgate");
     }
 	
 }
