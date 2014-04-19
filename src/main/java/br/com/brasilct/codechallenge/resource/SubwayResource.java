@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 @Path("/")
 public class SubwayResource {
 	
+	
 	@GET
 	@Path("/get/{origin}/{destination}")
 	@Produces({MediaType.APPLICATION_JSON})
