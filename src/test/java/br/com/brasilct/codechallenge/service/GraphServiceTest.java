@@ -119,9 +119,10 @@ public class GraphServiceTest {
 
         DijkstraShortestPath<Vertex, Edge> alg = new DijkstraShortestPath<Vertex, Edge>(graph, pedroII, saoBento);
 
-        GraphSearch.printRoute(alg.getPathEdgeList());
+        System.out.println(alg.getPathEdgeList());
+        //GraphSearch.printRoute(alg.getPathEdgeList());
 
-        GraphSearch.printTime(alg);
+        System.out.println(GraphSearch.getTime(alg));;
 
     }
     

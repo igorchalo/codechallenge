@@ -22,14 +22,8 @@ public class GraphService {
      */
     public static final int MAX_WEIGHT = 1000;
 
-    /**
-     * Tempo para se fazer uma baldeção.
-     */
     public static final int TRANSHIPMENT_WEIGHT = 12;
 
-    /**
-     * Tempo para ir a uma estação adjacente em um mesmo trem.
-     */
     public static final int ADJACENT_STATION = 3;
 
     private final Collection<Station> stations;

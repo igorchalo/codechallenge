@@ -1,53 +1,49 @@
 package br.com.brasilct.codechallenge.domain;
 
-import java.util.ArrayList;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import org.jgrapht.Graph;
 import org.jgrapht.alg.DijkstraShortestPath;
 
-import br.com.brasilct.codechallenge.domain.Edge;
-import br.com.brasilct.codechallenge.domain.Plataform;
-import br.com.brasilct.codechallenge.domain.Vertex;
-import br.com.brasilct.codechallenge.domain.csv.Line;
-import br.com.brasilct.codechallenge.domain.csv.LineDelegate;
 import br.com.brasilct.codechallenge.domain.csv.Station;
-import br.com.brasilct.codechallenge.domain.csv.StationDelegate;
-import br.com.brasilct.codechallenge.service.CsvReaderService;
+import br.com.brasilct.codechallenge.repository.MongoDbRepository;
 import br.com.brasilct.codechallenge.service.GraphService;
+
+import com.mongodb.DB;
 
 public class GraphSearch {
 
-	protected static final String STATIONS_PATH = "src/main/resources/stations.csv";
-
-	protected static final String LINES_PATH = "src/main/resources/lines.csv";
-	
 	private static Graph<Vertex, Edge> graph;
 	
 	private static GraphService graphService;
-	
-	public static void init(){
-		CsvReaderService csvReaderService = new CsvReaderService();
+
+	public static void init() throws UnknownHostException{
+		MongoDbRepository mongoDbRepository = new MongoDbRepository();
+		DB db = mongoDbRepository.getMongoDb();
 		
-		ArrayList<Line> lines = csvReaderService.execute(LINES_PATH,new LineDelegate());
-		ArrayList<Station> stations = csvReaderService.execute(STATIONS_PATH,new StationDelegate());
-		
-	    graphService = new GraphService(stations, lines);
+	    graphService = new GraphService(mongoDbRepository.getAllStations(db), mongoDbRepository.getAllLines(db));
         graph = graphService.execute();
 	}
 	
-	//TODO-connect with database
-    public void execute(String orign,String destiny) {
+    public List<Edge> getShortestPath(String origin,String destiny) {
 
-        Station originStation = graphService.getStation(orign);
+        Station originStation = graphService.getStation(origin);
         Station destinyStation = graphService.getStation(destiny);
 
         DijkstraShortestPath<Vertex, Edge> algorithm = new DijkstraShortestPath<Vertex, Edge>(graph, originStation, destinyStation);
 
-        printRoute(algorithm.getPathEdgeList());
+        return algorithm.getPathEdgeList();
+    }
+    
+    public String getRouteTime(String origin,String destiny) {
 
-        printTime(algorithm);
+        Station originStation = graphService.getStation(origin);
+        Station destinyStation = graphService.getStation(destiny);
 
+        DijkstraShortestPath<Vertex, Edge> algorithm = new DijkstraShortestPath<Vertex, Edge>(graph, originStation, destinyStation);
+
+        return getTime(algorithm);
     }
 
     public static void printRoute(final List<Edge> result) {
@@ -79,8 +75,8 @@ public class GraphSearch {
         }
     }
 
-    public static void printTime(final DijkstraShortestPath<Vertex, Edge> algorithm) {
-        System.out.println("Tempo gasto: " + ((int) algorithm.getPathLength() - 2 * GraphService.MAX_WEIGHT));
+    public static String getTime(final DijkstraShortestPath<Vertex, Edge> algorithm) {
+        return "Tempo gasto: " + ((int) algorithm.getPathLength() - 2 * GraphService.MAX_WEIGHT);
     }
 
 }
