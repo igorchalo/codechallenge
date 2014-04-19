@@ -24,6 +24,7 @@ import br.com.brasilct.codechallenge.domain.csv.Line;
 import br.com.brasilct.codechallenge.domain.csv.LineDelegate;
 import br.com.brasilct.codechallenge.domain.csv.Station;
 import br.com.brasilct.codechallenge.domain.csv.StationDelegate;
+import br.com.brasilct.codechallenge.domain.util.Util;
 import br.com.brasilct.codechallenge.repository.MongoDbRepository;
 
 import com.mongodb.DB;
@@ -55,8 +56,8 @@ public class ImportDataServiceTest {
 		MongoDbRepository mongoDbRepository = mock(MongoDbRepository.class);
 		
 		CsvReaderService csvReaderService = mock(CsvReaderService.class);
-		when(csvReaderService.execute(eq(ImportDataService.LINES_PATH), isA(LineDelegate.class))).thenReturn(getLines());
-		when(csvReaderService.execute(eq(ImportDataService.STATIONS_PATH), isA(StationDelegate.class))).thenReturn(getStations());
+		when(csvReaderService.execute(eq(Util.LINES_PATH), isA(LineDelegate.class))).thenReturn(getLines());
+		when(csvReaderService.execute(eq(Util.STATIONS_PATH), isA(StationDelegate.class))).thenReturn(getStations());
 		
 		ImportDataService importDataService = spy(new ImportDataService());	
 		doReturn(mongoDB).when(importDataService).getMongoDb(isA(MongoDbRepository.class));

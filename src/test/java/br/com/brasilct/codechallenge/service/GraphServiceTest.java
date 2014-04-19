@@ -11,10 +11,10 @@ import org.junit.Test;
 
 import br.com.brasilct.codechallenge.domain.Edge;
 import br.com.brasilct.codechallenge.domain.GraphEdgeFactory;
-import br.com.brasilct.codechallenge.domain.GraphSearch;
 import br.com.brasilct.codechallenge.domain.Plataform;
 import br.com.brasilct.codechallenge.domain.Vertex;
 import br.com.brasilct.codechallenge.domain.csv.Station;
+import br.com.brasilct.codechallenge.domain.util.Util;
 
 public class GraphServiceTest {
 	/**
@@ -119,10 +119,10 @@ public class GraphServiceTest {
 
         DijkstraShortestPath<Vertex, Edge> alg = new DijkstraShortestPath<Vertex, Edge>(graph, pedroII, saoBento);
 
-        System.out.println(alg.getPathEdgeList());
-        //GraphSearch.printRoute(alg.getPathEdgeList());
+        //System.out.println(alg.getPathEdgeList());
+        Util.printRoute(alg.getPathEdgeList());
 
-        System.out.println(GraphSearch.getTime(alg));;
+        System.out.println(Util.getTime(alg));
 
     }
     

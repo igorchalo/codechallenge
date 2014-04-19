@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import br.com.brasilct.codechallenge.service.CsvReaderService;
 
-public class GraphServiceIntegrationTest {
+public class GraphSearchIntegrationTest {
 
 	@Test
 	public void dijkstraShortestPathIntegrationTest(){

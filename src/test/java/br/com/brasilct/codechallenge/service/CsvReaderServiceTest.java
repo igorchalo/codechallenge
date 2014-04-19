@@ -16,6 +16,7 @@ import br.com.brasilct.codechallenge.domain.csv.Line;
 import br.com.brasilct.codechallenge.domain.csv.LineDelegate;
 import br.com.brasilct.codechallenge.domain.csv.Station;
 import br.com.brasilct.codechallenge.domain.csv.StationDelegate;
+import br.com.brasilct.codechallenge.domain.util.Util;
 
 public class CsvReaderServiceTest {
 	
@@ -31,8 +32,8 @@ public class CsvReaderServiceTest {
 		when(bufferedReader.readLine()).thenReturn("\"station1\",\"station2\",\"line\"","11,163,1","11,212,1",null);
 		
 		CsvReaderService csvReaderService = spy(new CsvReaderService());	
-		doReturn(bufferedReader).when(csvReaderService).getBufferedReader(ImportDataService.LINES_PATH);
-		ArrayList<Line> lines = csvReaderService.execute(ImportDataService.LINES_PATH, new LineDelegate());
+		doReturn(bufferedReader).when(csvReaderService).getBufferedReader(Util.LINES_PATH);
+		ArrayList<Line> lines = csvReaderService.execute(Util.LINES_PATH, new LineDelegate());
 		
 		Assert.assertEquals("O tamanho da lista deveria ser 2",2,lines.size());
 		
@@ -51,8 +52,8 @@ public class CsvReaderServiceTest {
 		when(bufferedReader.readLine()).thenReturn("\"id\",\"latitude\",\"longitude\",\"name\",\"display_name\",\"zone\",\"total_lines\",\"rail\"","1,51.5028,-0.2801,\"Acton Town\",\"Acton<br />Town\",3,2,0","2,51.5143,-0.0755,\"Aldgate\",NULL,1,2,0",null);
 		
 		CsvReaderService csvReaderService = spy(new CsvReaderService());	
-		doReturn(bufferedReader).when(csvReaderService).getBufferedReader(ImportDataService.STATIONS_PATH);
-		ArrayList<Station> station = csvReaderService.execute(ImportDataService.STATIONS_PATH, new StationDelegate());
+		doReturn(bufferedReader).when(csvReaderService).getBufferedReader(Util.STATIONS_PATH);
+		ArrayList<Station> station = csvReaderService.execute(Util.STATIONS_PATH, new StationDelegate());
 		
 		Assert.assertEquals("O tamanho da lista deveria ser 2",2,station.size());
 		

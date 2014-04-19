@@ -1,0 +1,8 @@
+jersey 2.0
+jgrapht,junit,mockito,logback
+mongodb
+
+Explicação:
+
+1 - Requisição para o serviço rest.
+2 - O serviço rest pega o grafo (que foi montado a partir dos dados do banco) e para achar a melhor rota utiliza o algoritmo Dijkstra.

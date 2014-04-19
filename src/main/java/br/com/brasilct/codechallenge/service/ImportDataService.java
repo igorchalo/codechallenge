@@ -10,6 +10,7 @@ import br.com.brasilct.codechallenge.domain.csv.Line;
 import br.com.brasilct.codechallenge.domain.csv.LineDelegate;
 import br.com.brasilct.codechallenge.domain.csv.Station;
 import br.com.brasilct.codechallenge.domain.csv.StationDelegate;
+import br.com.brasilct.codechallenge.domain.util.Util;
 import br.com.brasilct.codechallenge.repository.MongoDbRepository;
 
 import com.mongodb.DB;
@@ -17,10 +18,6 @@ import com.mongodb.DB;
 public class ImportDataService implements Service {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	protected static final String STATIONS_PATH = "src/main/resources/stations.csv";
-
-	protected static final String LINES_PATH = "src/main/resources/lines.csv";
 	
 	@Override
 	public void execute() {
@@ -34,13 +31,13 @@ public class ImportDataService implements Service {
 			CsvReaderService csvReaderService = getCsvReaderService();
 			logger.trace("Finished csvReaderService");
 			
-			ArrayList<Line> lines = csvReaderService.execute(LINES_PATH,new LineDelegate());
+			ArrayList<Line> lines = csvReaderService.execute(Util.LINES_PATH,new LineDelegate());
 
 			logger.trace("Inserting lines... ");
 			mongoDbRepository.insertLines(db, lines);
 			logger.trace("Finished inserting lines... ");
 			
-			ArrayList<Station> stations = csvReaderService.execute(STATIONS_PATH,new StationDelegate());
+			ArrayList<Station> stations = csvReaderService.execute(Util.STATIONS_PATH,new StationDelegate());
 
 			logger.trace("Inserting stations... ");
 			mongoDbRepository.insertStations(db, stations);
