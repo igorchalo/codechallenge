@@ -6,3 +6,28 @@ Explicação:
 
 1 - Requisição para o serviço rest.
 2 - O serviço rest pega o grafo (que foi montado a partir dos dados do banco) e para achar a melhor rota utiliza o algoritmo Dijkstra.
+
+
+Grafo:
+
+A estrutura do grafo pode ser entendida na classe: GraphServiceTest que possui um método de POC:
+
+a) O exemplo toma como base a estação do metro se:
+
+			    Sao Bento
+			     |
+    Anhangabau - Se - Pedro II
+                 |
+               Liberdade
+               
+b) Caso uma pessoa queira ir da Pedro II para Sao Bento qual seria a rota?
+Linha 3 = Vermelha
+Linha 1 = Azul
+* Tomando como base que a baldeação leva 12 minutos e mudar de linha leva 3.
+
+Estação Pedro II, plataforma na linha 3
+Estação Sé, plataforma na linha 3        (3)
+Estação Sé, plataforma na linha 1        (12)
+Estação São Bento, plataforma na linha 1 (3)
+Tempo gasto: 18
+

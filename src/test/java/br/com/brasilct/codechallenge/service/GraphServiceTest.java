@@ -57,8 +57,8 @@ public class GraphServiceTest {
         SimpleWeightedGraph<Vertex, Edge> graph = new SimpleWeightedGraph<Vertex, Edge>(new GraphEdgeFactory());
 
         Station se = new Station("Sé");
-        Plataform pSe1 = new Plataform(se, 1);
-        Plataform pSe3 = new Plataform(se, 3);
+        Plataform plataformSeLine1 = new Plataform(se, 1);
+        Plataform plataformSeLine3 = new Plataform(se, 3);
 
         Station saoBento = new Station("São Bento");
         Plataform pSaoBento = new Plataform(saoBento, 1);
@@ -73,8 +73,8 @@ public class GraphServiceTest {
         Plataform pPedroII = new Plataform(pedroII, 3);
 
         graph.addVertex(se);
-        graph.addVertex(pSe1);
-        graph.addVertex(pSe3);
+        graph.addVertex(plataformSeLine1);
+        graph.addVertex(plataformSeLine3);
         graph.addVertex(saoBento);
         graph.addVertex(pSaoBento);
         graph.addVertex(liberdade);
@@ -84,13 +84,13 @@ public class GraphServiceTest {
         graph.addVertex(pedroII);
         graph.addVertex(pPedroII);
 
-        Edge e0 = graph.addEdge(se, pSe1);
+        Edge e0 = graph.addEdge(se, plataformSeLine1);
         graph.setEdgeWeight(e0, GraphService.MAX_WEIGHT);
 
-        Edge e1 = graph.addEdge(se, pSe3);
+        Edge e1 = graph.addEdge(se, plataformSeLine3);
         graph.setEdgeWeight(e1, GraphService.MAX_WEIGHT);
 
-        Edge e2 = graph.addEdge(pSe1, pSe3);
+        Edge e2 = graph.addEdge(plataformSeLine1, plataformSeLine3);
         graph.setEdgeWeight(e2, GraphService.TRANSHIPMENT_WEIGHT);
 
         Edge e3 = graph.addEdge(liberdade, pLiberdade);
@@ -105,16 +105,16 @@ public class GraphServiceTest {
         Edge e6 = graph.addEdge(pedroII, pPedroII);
         graph.setEdgeWeight(e6, GraphService.MAX_WEIGHT);
 
-        Edge e7 = graph.addEdge(pLiberdade, pSe1);
+        Edge e7 = graph.addEdge(pLiberdade, plataformSeLine1);
         graph.setEdgeWeight(e7, GraphService.ADJACENT_STATION);
 
-        Edge e8 = graph.addEdge(pSe1, pSaoBento);
+        Edge e8 = graph.addEdge(plataformSeLine1, pSaoBento);
         graph.setEdgeWeight(e8, GraphService.ADJACENT_STATION);
 
-        Edge e9 = graph.addEdge(pAnhangabau, pSe3);
+        Edge e9 = graph.addEdge(pAnhangabau, plataformSeLine3);
         graph.setEdgeWeight(e9, GraphService.ADJACENT_STATION);
 
-        Edge e10 = graph.addEdge(pSe3, pPedroII);
+        Edge e10 = graph.addEdge(plataformSeLine3, pPedroII);
         graph.setEdgeWeight(e10, GraphService.ADJACENT_STATION);
 
         DijkstraShortestPath<Vertex, Edge> alg = new DijkstraShortestPath<Vertex, Edge>(graph, pedroII, saoBento);

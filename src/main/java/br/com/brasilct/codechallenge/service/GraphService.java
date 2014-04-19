@@ -56,13 +56,15 @@ public class GraphService {
             for (int i = 0; i < numberOfLinesInStation; i++) {
                 Plataform plataform = new Plataform(newStation);
                 graph.addVertex(plataform);
+                
                 Edge edgeForPlataform = graph.addEdge(newStation, plataform);
                 graph.setEdgeWeight(edgeForPlataform, MAX_WEIGHT);
                 
-                for (Plataform plataformJaAdicionada : newStation.getPlataforms()) {
-                    Edge edgeTranshipment = graph.addEdge(plataformJaAdicionada, plataform);
+                for (Plataform transhipmentPlataform : newStation.getPlataforms()) {
+                    Edge edgeTranshipment = graph.addEdge(transhipmentPlataform, plataform);
                     graph.setEdgeWeight(edgeTranshipment, TRANSHIPMENT_WEIGHT);
                 }
+                
                 newStation.addPlataform(plataform);
             }
             stationMap.put(station.getName(), newStation);
