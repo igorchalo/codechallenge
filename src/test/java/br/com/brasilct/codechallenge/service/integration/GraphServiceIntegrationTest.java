@@ -7,6 +7,8 @@ import java.util.Set;
 import junit.framework.Assert;
 
 import org.jgrapht.Graph;
+import org.jgrapht.alg.DijkstraShortestPath;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.brasilct.codechallenge.domain.Edge;
@@ -21,7 +23,22 @@ import br.com.brasilct.codechallenge.service.CsvReaderService;
 import br.com.brasilct.codechallenge.service.GraphService;
 
 public class GraphServiceIntegrationTest {
-
+	
+	private static GraphService graphService;
+	
+	private static Graph<Vertex, Edge> graph;
+	
+	@BeforeClass
+	public static void init(){
+		CsvReaderService csvReaderService = new CsvReaderService();
+		
+		ArrayList<Line> lines = csvReaderService.execute(Util.LINES_PATH,new LineDelegate());
+		ArrayList<Station> stations = csvReaderService.execute(Util.STATIONS_PATH,new StationDelegate());
+		
+        graphService = new GraphService(stations,lines);
+        graph = graphService.execute();
+	}
+	
 	/**
 	 * Get data from csvFile and execute dijkstra.
 	 * 
@@ -38,14 +55,6 @@ public class GraphServiceIntegrationTest {
 	 */
 	@Test
 	public void dijkstraShortestPathIntegrationTest(){
-		CsvReaderService csvReaderService = new CsvReaderService();
-		
-		ArrayList<Line> lines = csvReaderService.execute(Util.LINES_PATH,new LineDelegate());
-		ArrayList<Station> stations = csvReaderService.execute(Util.STATIONS_PATH,new StationDelegate());
-		
-        GraphService graphService = new GraphService(stations,lines);
-        Graph<Vertex, Edge> graph = graphService.execute();
-        
         Station actonTownStation = graphService.getStation("Acton Town");
         Set<Plataform> plataforms = actonTownStation.getPlataforms();
         
@@ -66,17 +75,26 @@ public class GraphServiceIntegrationTest {
         Assert.assertEquals(p4.getLine(), -1);
         Assert.assertEquals(p5.getLine(), -1);
         
-        Edge edge1 = graph.getEdge(graphService.getStation("Acton Town"),graphService.getStation("Chiswick Park"));
-        //System.out.println(graph.getEdgeWeight(edge1));
+        Edge edge1 = graph.getEdge(p1,graphService.getStation("Chiswick Park").getPlataforms().iterator().next());
+        Assert.assertEquals("A ligacao deveria ser adjacente",3.0, graph.getEdgeWeight(edge1));
         
-        Edge edge2 = graph.getEdge(p2, graphService.getStation("Acton Town"));
-        //System.out.println(graph.getEdgeWeight(edge2));
+        Edge edge2 = graph.getEdge(p2,graphService.getStation("South Ealing").getPlataforms().iterator().next());
+        Assert.assertEquals("A ligacao deveria ser adjacente",3.0, graph.getEdgeWeight(edge2));
         
-        Edge edge3 = graph.getEdge(graphService.getStation("Acton Town"),p3);
-        //System.out.println(graph.getEdgeWeight(edge3));
-        
-        Edge edge4 = graph.getEdge(graphService.getStation("Acton Town"), p4);
-        //System.out.println(graph.getEdgeWeight(edge4));
+        Station originStation = graphService.getStation("Acton Town");
+        Station destinyStation = graphService.getStation("Stamford Brook");
+
+        DijkstraShortestPath<Vertex, Edge> algorithm = new DijkstraShortestPath<Vertex, Edge>(graph, originStation, destinyStation);
+        Assert.assertEquals("O tempo deveria ser de 9.","Tempo gasto: 9 minutos.", Util.getTime(algorithm));
+	}
+	
+	@Test
+	public void oxfordToJohn(){
+		Station originStation = graphService.getStation("Oxford Circus");
+		Station destinyStation = graphService.getStation("St. John's Wood");
+
+		DijkstraShortestPath<Vertex, Edge> algorithm = new DijkstraShortestPath<Vertex, Edge>(graph, originStation, destinyStation);
+        Assert.assertEquals("O tempo deveria ser de 21.","Tempo gasto: 21 minutos.", Util.getTime(algorithm));
 	}
 	
 }
